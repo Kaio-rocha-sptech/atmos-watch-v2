@@ -4,7 +4,7 @@ import os
 import json
 from dotenv import load_dotenv
 from io import BytesIO
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 # =========================
 # CONFIGURAÇÃO
@@ -24,9 +24,19 @@ s3 = boto3.client(
 )
 
 # =========================
+# LIMITES DE CPU, RAM E DISCO P CAPTURA DE INCIDENTES
+# =========================
+
+LIMITES = {
+      "cpu_perc": 90,
+      "ram_perc": 80,
+      "disco_perc": 85
+  }
+
+
+# =========================
 # UTIL - LOG PADRONIZADO
 # =========================
-from datetime import datetime
 
 def log(mensagem, nivel="INFO"):
     agora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -191,9 +201,9 @@ def transformar_dados(df):
 # =========================
 
 def construir_json_client(df, empresa):
-    
+
     # Constrói JSON no formato de listas (time-series)
-    
+
     log(f"[{empresa}] Construindo JSON client")
 
     df = df.copy()
@@ -270,7 +280,7 @@ def construir_json_client(df, empresa):
 
     return {
         "empresa": empresa,
-        "gerado_em": datetime.now(UTC).isoformat(),
+        "gerado_em": datetime.now(timezone.utc).isoformat(),
         "resumo": resumo,
         "hosts": hosts
     }
@@ -304,10 +314,10 @@ def salvar_client_s3(json_data, empresa):
     """
     key = f"client/{empresa}/client.json"
     # # salvar local para teste =================================
-    
+
     # with open('Json_s3.json', 'w', encoding="utf-8") as a:
     #     json.dump(json_data, a, indent=4, ensure_ascii=False)
-    
+
     # ===========================================================
     s3.put_object(
         Bucket=NOME_BUCKET,
@@ -317,6 +327,136 @@ def salvar_client_s3(json_data, empresa):
     )
 
     log(f"[{empresa}] Client salvo no S3")
+
+
+# =========================
+# DASHBOARD (INCIDENTES + MÉTRICAS)
+# =========================
+
+def processar_incidente(df_empresa):
+    incidentes = {}
+
+    for _, linha in df_empresa.iterrows():
+        try:
+            ts = pd.to_datetime(linha['datahora'])
+            cpu = float(linha['cpu_perc'])
+            ram = float(linha['ram_perc'])
+            disco = float(linha['disco_perc'])
+        except:
+            continue
+
+        servidor = str(linha.get('hostname', ''))
+        data_str = ts.strftime('%Y-%m-%d')
+
+        alertas = []
+        if cpu > LIMITES['cpu_perc']: alertas.append(('cpu', cpu))
+        if ram > LIMITES['ram_perc']: alertas.append(('ram', ram))
+        if disco > LIMITES['disco_perc']: alertas.append(('disco', disco))
+
+        if not alertas:
+            continue
+
+        if servidor not in incidentes:
+            incidentes[servidor] = {
+                "TotalIncidentes": {"total_mes": 0, "por_dia": {}},
+                "DataIncidente": [],
+                "Componentes": {"cpu": [], "ram": [], "disco": []},
+                "detalhes": []
+            }
+
+        sv = incidentes[servidor]
+
+        for componente, valor in alertas:
+            sv["DataIncidente"].append(data_str)
+            sv["TotalIncidentes"]["total_mes"] += 1
+            sv["TotalIncidentes"]["por_dia"][data_str] = (
+                sv["TotalIncidentes"]["por_dia"].get(data_str, 0) + 1
+            )
+            sv["Componentes"][componente].append(data_str)
+            sv["detalhes"].append({
+                "data": data_str,
+                "servidor": servidor,
+                "componente": componente,
+                "valor": round(valor, 2),
+                "limite": LIMITES[f"{componente}_perc"],
+                "descricao": f"{componente.upper()} atingiu {round(valor, 2)}% (limite: {LIMITES[f'{componente}_perc']}%)"
+            })
+
+    return incidentes
+
+
+def processar_metricas(df_empresa):
+    metricas = {}
+
+    if 'tipo_incidente' in df_empresa.columns:
+        df_met = df_empresa[df_empresa['tipo_incidente'].isna()]
+    else:
+        df_met = df_empresa
+
+    for _, linha in df_met.iterrows():
+        try:
+            ts = pd.to_datetime(linha['datahora'])
+            cpu = float(linha['cpu_perc'])
+            ram = float(linha['ram_perc'])
+            disco = float(linha['disco_perc'])
+        except:
+            continue
+
+        servidor = str(linha.get('hostname', ''))
+        data_str = ts.strftime('%Y-%m-%d')
+
+        if servidor not in metricas:
+            metricas[servidor] = {
+                "pico_mes": {"cpu": 0, "ram": 0, "disco": 0},
+                "dias": {}
+            }
+
+        sv = metricas[servidor]
+
+        if data_str not in sv["dias"]:
+            sv["dias"][data_str] = {"cpu_pico": 0, "ram_pico": 0, "disco_pico": 0}
+
+        dia = sv["dias"][data_str]
+
+        if cpu > dia["cpu_pico"]: dia["cpu_pico"] = round(cpu, 2)
+        if ram > dia["ram_pico"]: dia["ram_pico"] = round(ram, 2)
+        if disco > dia["disco_pico"]: dia["disco_pico"] = round(disco, 2)
+
+        if cpu > sv["pico_mes"]["cpu"]: sv["pico_mes"]["cpu"] = round(cpu, 2)
+        if ram > sv["pico_mes"]["ram"]: sv["pico_mes"]["ram"] = round(ram, 2)
+        if disco > sv["pico_mes"]["disco"]: sv["pico_mes"]["disco"] = round(disco, 2)
+
+    return metricas
+
+
+def salvar_dashboard_s3(incidentes, metricas, empresa):
+    import calendar
+    from datetime import date
+
+    hoje = date.today()
+    mes = hoje.month
+    ano = hoje.year
+    total_dias = calendar.monthrange(ano, mes)[1]
+
+    output = {
+        "empresa": empresa,
+        "gerado_em": datetime.now(timezone.utc).isoformat(),
+        "mes_referencia": {"mes": mes, "ano": ano},
+        "total_dias_mes": total_dias,
+        "incidentes": incidentes,
+        "metricas": metricas
+    }
+
+    key = f"client/{empresa}/dashboard/client_{mes:02d}_{ano}.json"
+
+    s3.put_object(
+        Bucket=NOME_BUCKET,
+        Key=key,
+        Body=json.dumps(output, ensure_ascii=False, indent=2),
+        ContentType='application/json'
+    )
+
+    log(f"[{empresa}] Dashboard salvo no S3")
 
 
 # =========================
@@ -353,6 +493,11 @@ def executar_etl():
             # LOAD
             salvar_trusted_s3(df_trusted, empresa)
             salvar_client_s3(json_client, empresa)
+
+            # DASHBOARD GESTOR INCIDENTES
+            incidentes = processar_incidente(df_raw, empresa)
+            metricas = processar_metricas(df_raw)
+            salvar_dashboard_s3(incidentes, metricas, empresa)
 
             log(f"[{empresa}] FINALIZADO")
 
