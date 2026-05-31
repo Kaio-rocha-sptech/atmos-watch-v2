@@ -1,0 +1,1605 @@
+{
+  "empresa": "empresaX",
+  "gerado_em": "2026-05-31T23:59:00+00:00",
+  "mes_referencia": {
+    "mes": 5,
+    "ano": 2026
+  },
+  "total_dias_mes": 31,
+  "incidentes": {
+    "laptop-ANDERSON": {
+      "TotalIncidentes": {
+        "total_mes": 8,
+        "por_dia": {
+          "2026-05-05": 1,
+          "2026-05-13": 1,
+          "2026-05-14": 1,
+          "2026-05-17": 1,
+          "2026-05-22": 1,
+          "2026-05-24": 1,
+          "2026-05-27": 1,
+          "2026-05-31": 1
+        }
+      },
+      "DataIncidente": [
+        "2026-05-05",
+        "2026-05-13",
+        "2026-05-14",
+        "2026-05-17",
+        "2026-05-22",
+        "2026-05-24",
+        "2026-05-27",
+        "2026-05-31"
+      ],
+      "Componentes": {
+        "cpu": [],
+        "ram": [
+          "2026-05-05",
+          "2026-05-13",
+          "2026-05-14",
+          "2026-05-17",
+          "2026-05-22",
+          "2026-05-24",
+          "2026-05-27",
+          "2026-05-31"
+        ],
+        "disco": []
+      },
+      "detalhes": [
+        {
+          "data": "2026-05-05",
+          "servidor": "laptop-ANDERSON",
+          "componente": "ram",
+          "valor": 82.4,
+          "limite": 80,
+          "descricao": "RAM atingiu 82.4% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-13",
+          "servidor": "laptop-ANDERSON",
+          "componente": "ram",
+          "valor": 82.9,
+          "limite": 80,
+          "descricao": "RAM atingiu 82.9% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-14",
+          "servidor": "laptop-ANDERSON",
+          "componente": "ram",
+          "valor": 85.0,
+          "limite": 80,
+          "descricao": "RAM atingiu 85.0% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-17",
+          "servidor": "laptop-ANDERSON",
+          "componente": "ram",
+          "valor": 81.0,
+          "limite": 80,
+          "descricao": "RAM atingiu 81.0% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-22",
+          "servidor": "laptop-ANDERSON",
+          "componente": "ram",
+          "valor": 84.2,
+          "limite": 80,
+          "descricao": "RAM atingiu 84.2% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-24",
+          "servidor": "laptop-ANDERSON",
+          "componente": "ram",
+          "valor": 83.0,
+          "limite": 80,
+          "descricao": "RAM atingiu 83.0% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-27",
+          "servidor": "laptop-ANDERSON",
+          "componente": "ram",
+          "valor": 83.6,
+          "limite": 80,
+          "descricao": "RAM atingiu 83.6% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-31",
+          "servidor": "laptop-ANDERSON",
+          "componente": "ram",
+          "valor": 83.1,
+          "limite": 80,
+          "descricao": "RAM atingiu 83.1% (limite: 80%)"
+        }
+      ]
+    },
+    "laptop-AURORA": {
+      "TotalIncidentes": {
+        "total_mes": 5,
+        "por_dia": {
+          "2026-05-10": 1,
+          "2026-05-11": 1,
+          "2026-05-14": 1,
+          "2026-05-25": 1,
+          "2026-05-29": 1
+        }
+      },
+      "DataIncidente": [
+        "2026-05-10",
+        "2026-05-11",
+        "2026-05-14",
+        "2026-05-25",
+        "2026-05-29"
+      ],
+      "Componentes": {
+        "cpu": [],
+        "ram": [
+          "2026-05-10",
+          "2026-05-11",
+          "2026-05-14",
+          "2026-05-25",
+          "2026-05-29"
+        ],
+        "disco": []
+      },
+      "detalhes": [
+        {
+          "data": "2026-05-10",
+          "servidor": "laptop-AURORA",
+          "componente": "ram",
+          "valor": 83.0,
+          "limite": 80,
+          "descricao": "RAM atingiu 83.0% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-11",
+          "servidor": "laptop-AURORA",
+          "componente": "ram",
+          "valor": 82.9,
+          "limite": 80,
+          "descricao": "RAM atingiu 82.9% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-14",
+          "servidor": "laptop-AURORA",
+          "componente": "ram",
+          "valor": 82.7,
+          "limite": 80,
+          "descricao": "RAM atingiu 82.7% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-25",
+          "servidor": "laptop-AURORA",
+          "componente": "ram",
+          "valor": 86.2,
+          "limite": 80,
+          "descricao": "RAM atingiu 86.2% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-29",
+          "servidor": "laptop-AURORA",
+          "componente": "ram",
+          "valor": 80.2,
+          "limite": 80,
+          "descricao": "RAM atingiu 80.2% (limite: 80%)"
+        }
+      ]
+    },
+    "laptop-NZ13": {
+      "TotalIncidentes": {
+        "total_mes": 7,
+        "por_dia": {
+          "2026-05-01": 1,
+          "2026-05-03": 1,
+          "2026-05-12": 1,
+          "2026-05-13": 1,
+          "2026-05-25": 1,
+          "2026-05-29": 1,
+          "2026-05-31": 1
+        }
+      },
+      "DataIncidente": [
+        "2026-05-01",
+        "2026-05-03",
+        "2026-05-12",
+        "2026-05-13",
+        "2026-05-25",
+        "2026-05-29",
+        "2026-05-31"
+      ],
+      "Componentes": {
+        "cpu": [],
+        "ram": [
+          "2026-05-01",
+          "2026-05-03",
+          "2026-05-12",
+          "2026-05-13",
+          "2026-05-25",
+          "2026-05-29",
+          "2026-05-31"
+        ],
+        "disco": []
+      },
+      "detalhes": [
+        {
+          "data": "2026-05-01",
+          "servidor": "laptop-NZ13",
+          "componente": "ram",
+          "valor": 85.5,
+          "limite": 80,
+          "descricao": "RAM atingiu 85.5% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-03",
+          "servidor": "laptop-NZ13",
+          "componente": "ram",
+          "valor": 85.4,
+          "limite": 80,
+          "descricao": "RAM atingiu 85.4% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-12",
+          "servidor": "laptop-NZ13",
+          "componente": "ram",
+          "valor": 86.0,
+          "limite": 80,
+          "descricao": "RAM atingiu 86.0% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-13",
+          "servidor": "laptop-NZ13",
+          "componente": "ram",
+          "valor": 82.9,
+          "limite": 80,
+          "descricao": "RAM atingiu 82.9% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-25",
+          "servidor": "laptop-NZ13",
+          "componente": "ram",
+          "valor": 81.8,
+          "limite": 80,
+          "descricao": "RAM atingiu 81.8% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-29",
+          "servidor": "laptop-NZ13",
+          "componente": "ram",
+          "valor": 84.9,
+          "limite": 80,
+          "descricao": "RAM atingiu 84.9% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-31",
+          "servidor": "laptop-NZ13",
+          "componente": "ram",
+          "valor": 81.0,
+          "limite": 80,
+          "descricao": "RAM atingiu 81.0% (limite: 80%)"
+        }
+      ]
+    },
+    "laptop-LUANA": {
+      "TotalIncidentes": {
+        "total_mes": 8,
+        "por_dia": {
+          "2026-05-06": 1,
+          "2026-05-07": 1,
+          "2026-05-08": 1,
+          "2026-05-17": 1,
+          "2026-05-23": 1,
+          "2026-05-24": 1,
+          "2026-05-26": 1,
+          "2026-05-31": 1
+        }
+      },
+      "DataIncidente": [
+        "2026-05-06",
+        "2026-05-07",
+        "2026-05-08",
+        "2026-05-17",
+        "2026-05-23",
+        "2026-05-24",
+        "2026-05-26",
+        "2026-05-31"
+      ],
+      "Componentes": {
+        "cpu": [],
+        "ram": [
+          "2026-05-06",
+          "2026-05-07",
+          "2026-05-08",
+          "2026-05-17",
+          "2026-05-23",
+          "2026-05-24",
+          "2026-05-26",
+          "2026-05-31"
+        ],
+        "disco": []
+      },
+      "detalhes": [
+        {
+          "data": "2026-05-06",
+          "servidor": "laptop-LUANA",
+          "componente": "ram",
+          "valor": 84.6,
+          "limite": 80,
+          "descricao": "RAM atingiu 84.6% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-07",
+          "servidor": "laptop-LUANA",
+          "componente": "ram",
+          "valor": 86.1,
+          "limite": 80,
+          "descricao": "RAM atingiu 86.1% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-08",
+          "servidor": "laptop-LUANA",
+          "componente": "ram",
+          "valor": 82.5,
+          "limite": 80,
+          "descricao": "RAM atingiu 82.5% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-17",
+          "servidor": "laptop-LUANA",
+          "componente": "ram",
+          "valor": 82.7,
+          "limite": 80,
+          "descricao": "RAM atingiu 82.7% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-23",
+          "servidor": "laptop-LUANA",
+          "componente": "ram",
+          "valor": 80.3,
+          "limite": 80,
+          "descricao": "RAM atingiu 80.3% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-24",
+          "servidor": "laptop-LUANA",
+          "componente": "ram",
+          "valor": 81.8,
+          "limite": 80,
+          "descricao": "RAM atingiu 81.8% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-26",
+          "servidor": "laptop-LUANA",
+          "componente": "ram",
+          "valor": 84.1,
+          "limite": 80,
+          "descricao": "RAM atingiu 84.1% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-31",
+          "servidor": "laptop-LUANA",
+          "componente": "ram",
+          "valor": 85.5,
+          "limite": 80,
+          "descricao": "RAM atingiu 85.5% (limite: 80%)"
+        }
+      ]
+    },
+    "laptop-LUIZ": {
+      "TotalIncidentes": {
+        "total_mes": 9,
+        "por_dia": {
+          "2026-05-01": 1,
+          "2026-05-02": 1,
+          "2026-05-09": 1,
+          "2026-05-14": 1,
+          "2026-05-16": 1,
+          "2026-05-17": 1,
+          "2026-05-22": 1,
+          "2026-05-25": 1,
+          "2026-05-27": 1
+        }
+      },
+      "DataIncidente": [
+        "2026-05-01",
+        "2026-05-02",
+        "2026-05-09",
+        "2026-05-14",
+        "2026-05-16",
+        "2026-05-17",
+        "2026-05-22",
+        "2026-05-25",
+        "2026-05-27"
+      ],
+      "Componentes": {
+        "cpu": [],
+        "ram": [
+          "2026-05-01",
+          "2026-05-02",
+          "2026-05-09",
+          "2026-05-14",
+          "2026-05-16",
+          "2026-05-17",
+          "2026-05-22",
+          "2026-05-25",
+          "2026-05-27"
+        ],
+        "disco": []
+      },
+      "detalhes": [
+        {
+          "data": "2026-05-01",
+          "servidor": "laptop-LUIZ",
+          "componente": "ram",
+          "valor": 80.3,
+          "limite": 80,
+          "descricao": "RAM atingiu 80.3% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-02",
+          "servidor": "laptop-LUIZ",
+          "componente": "ram",
+          "valor": 80.5,
+          "limite": 80,
+          "descricao": "RAM atingiu 80.5% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-09",
+          "servidor": "laptop-LUIZ",
+          "componente": "ram",
+          "valor": 86.5,
+          "limite": 80,
+          "descricao": "RAM atingiu 86.5% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-14",
+          "servidor": "laptop-LUIZ",
+          "componente": "ram",
+          "valor": 80.6,
+          "limite": 80,
+          "descricao": "RAM atingiu 80.6% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-16",
+          "servidor": "laptop-LUIZ",
+          "componente": "ram",
+          "valor": 80.4,
+          "limite": 80,
+          "descricao": "RAM atingiu 80.4% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-17",
+          "servidor": "laptop-LUIZ",
+          "componente": "ram",
+          "valor": 83.6,
+          "limite": 80,
+          "descricao": "RAM atingiu 83.6% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-22",
+          "servidor": "laptop-LUIZ",
+          "componente": "ram",
+          "valor": 86.5,
+          "limite": 80,
+          "descricao": "RAM atingiu 86.5% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-25",
+          "servidor": "laptop-LUIZ",
+          "componente": "ram",
+          "valor": 81.3,
+          "limite": 80,
+          "descricao": "RAM atingiu 81.3% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-27",
+          "servidor": "laptop-LUIZ",
+          "componente": "ram",
+          "valor": 84.9,
+          "limite": 80,
+          "descricao": "RAM atingiu 84.9% (limite: 80%)"
+        }
+      ]
+    },
+    "laptop-MATHEUS": {
+      "TotalIncidentes": {
+        "total_mes": 9,
+        "por_dia": {
+          "2026-05-01": 1,
+          "2026-05-05": 1,
+          "2026-05-08": 1,
+          "2026-05-11": 1,
+          "2026-05-13": 1,
+          "2026-05-15": 1,
+          "2026-05-19": 1,
+          "2026-05-29": 1,
+          "2026-05-30": 1
+        }
+      },
+      "DataIncidente": [
+        "2026-05-01",
+        "2026-05-05",
+        "2026-05-08",
+        "2026-05-11",
+        "2026-05-13",
+        "2026-05-15",
+        "2026-05-19",
+        "2026-05-29",
+        "2026-05-30"
+      ],
+      "Componentes": {
+        "cpu": [],
+        "ram": [
+          "2026-05-01",
+          "2026-05-05",
+          "2026-05-08",
+          "2026-05-11",
+          "2026-05-13",
+          "2026-05-15",
+          "2026-05-19",
+          "2026-05-29",
+          "2026-05-30"
+        ],
+        "disco": []
+      },
+      "detalhes": [
+        {
+          "data": "2026-05-01",
+          "servidor": "laptop-MATHEUS",
+          "componente": "ram",
+          "valor": 81.0,
+          "limite": 80,
+          "descricao": "RAM atingiu 81.0% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-05",
+          "servidor": "laptop-MATHEUS",
+          "componente": "ram",
+          "valor": 86.3,
+          "limite": 80,
+          "descricao": "RAM atingiu 86.3% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-08",
+          "servidor": "laptop-MATHEUS",
+          "componente": "ram",
+          "valor": 85.1,
+          "limite": 80,
+          "descricao": "RAM atingiu 85.1% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-11",
+          "servidor": "laptop-MATHEUS",
+          "componente": "ram",
+          "valor": 82.1,
+          "limite": 80,
+          "descricao": "RAM atingiu 82.1% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-13",
+          "servidor": "laptop-MATHEUS",
+          "componente": "ram",
+          "valor": 80.6,
+          "limite": 80,
+          "descricao": "RAM atingiu 80.6% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-15",
+          "servidor": "laptop-MATHEUS",
+          "componente": "ram",
+          "valor": 85.2,
+          "limite": 80,
+          "descricao": "RAM atingiu 85.2% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-19",
+          "servidor": "laptop-MATHEUS",
+          "componente": "ram",
+          "valor": 81.7,
+          "limite": 80,
+          "descricao": "RAM atingiu 81.7% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-29",
+          "servidor": "laptop-MATHEUS",
+          "componente": "ram",
+          "valor": 85.3,
+          "limite": 80,
+          "descricao": "RAM atingiu 85.3% (limite: 80%)"
+        },
+        {
+          "data": "2026-05-30",
+          "servidor": "laptop-MATHEUS",
+          "componente": "ram",
+          "valor": 83.5,
+          "limite": 80,
+          "descricao": "RAM atingiu 83.5% (limite: 80%)"
+        }
+      ]
+    }
+  },
+  "metricas": {
+    "laptop-ANDERSON": {
+      "pico_mes": {
+        "cpu": 63.2,
+        "ram": 85.0,
+        "disco": 83.4
+      },
+      "dias": {
+        "2026-05-01": {
+          "cpu_pico": 50.5,
+          "ram_pico": 61.1,
+          "disco_pico": 77.7
+        },
+        "2026-05-02": {
+          "cpu_pico": 24.3,
+          "ram_pico": 60.8,
+          "disco_pico": 72.7
+        },
+        "2026-05-03": {
+          "cpu_pico": 53.0,
+          "ram_pico": 57.7,
+          "disco_pico": 83.4
+        },
+        "2026-05-04": {
+          "cpu_pico": 52.1,
+          "ram_pico": 76.7,
+          "disco_pico": 73.8
+        },
+        "2026-05-05": {
+          "cpu_pico": 38.6,
+          "ram_pico": 82.4,
+          "disco_pico": 77.3
+        },
+        "2026-05-06": {
+          "cpu_pico": 63.2,
+          "ram_pico": 65.3,
+          "disco_pico": 71.7
+        },
+        "2026-05-07": {
+          "cpu_pico": 33.6,
+          "ram_pico": 78.7,
+          "disco_pico": 68.8
+        },
+        "2026-05-08": {
+          "cpu_pico": 61.3,
+          "ram_pico": 78.0,
+          "disco_pico": 76.3
+        },
+        "2026-05-09": {
+          "cpu_pico": 56.8,
+          "ram_pico": 67.6,
+          "disco_pico": 69.7
+        },
+        "2026-05-10": {
+          "cpu_pico": 60.9,
+          "ram_pico": 78.6,
+          "disco_pico": 75.7
+        },
+        "2026-05-11": {
+          "cpu_pico": 25.4,
+          "ram_pico": 72.0,
+          "disco_pico": 70.2
+        },
+        "2026-05-12": {
+          "cpu_pico": 22.3,
+          "ram_pico": 67.5,
+          "disco_pico": 69.8
+        },
+        "2026-05-13": {
+          "cpu_pico": 47.9,
+          "ram_pico": 82.9,
+          "disco_pico": 69.9
+        },
+        "2026-05-14": {
+          "cpu_pico": 52.7,
+          "ram_pico": 85.0,
+          "disco_pico": 80.1
+        },
+        "2026-05-15": {
+          "cpu_pico": 34.2,
+          "ram_pico": 67.7,
+          "disco_pico": 74.0
+        },
+        "2026-05-16": {
+          "cpu_pico": 23.3,
+          "ram_pico": 57.1,
+          "disco_pico": 78.4
+        },
+        "2026-05-17": {
+          "cpu_pico": 32.1,
+          "ram_pico": 81.0,
+          "disco_pico": 80.1
+        },
+        "2026-05-18": {
+          "cpu_pico": 42.2,
+          "ram_pico": 74.8,
+          "disco_pico": 69.3
+        },
+        "2026-05-19": {
+          "cpu_pico": 37.3,
+          "ram_pico": 73.9,
+          "disco_pico": 71.7
+        },
+        "2026-05-20": {
+          "cpu_pico": 35.0,
+          "ram_pico": 76.5,
+          "disco_pico": 70.5
+        },
+        "2026-05-21": {
+          "cpu_pico": 34.7,
+          "ram_pico": 75.8,
+          "disco_pico": 70.4
+        },
+        "2026-05-22": {
+          "cpu_pico": 39.6,
+          "ram_pico": 84.2,
+          "disco_pico": 82.7
+        },
+        "2026-05-23": {
+          "cpu_pico": 48.9,
+          "ram_pico": 65.6,
+          "disco_pico": 80.4
+        },
+        "2026-05-24": {
+          "cpu_pico": 35.7,
+          "ram_pico": 83.0,
+          "disco_pico": 73.9
+        },
+        "2026-05-25": {
+          "cpu_pico": 44.3,
+          "ram_pico": 62.0,
+          "disco_pico": 72.8
+        },
+        "2026-05-26": {
+          "cpu_pico": 23.5,
+          "ram_pico": 71.2,
+          "disco_pico": 69.0
+        },
+        "2026-05-27": {
+          "cpu_pico": 21.6,
+          "ram_pico": 83.6,
+          "disco_pico": 69.9
+        },
+        "2026-05-28": {
+          "cpu_pico": 49.6,
+          "ram_pico": 61.6,
+          "disco_pico": 78.2
+        },
+        "2026-05-29": {
+          "cpu_pico": 59.9,
+          "ram_pico": 73.4,
+          "disco_pico": 69.4
+        },
+        "2026-05-30": {
+          "cpu_pico": 41.3,
+          "ram_pico": 74.5,
+          "disco_pico": 74.0
+        },
+        "2026-05-31": {
+          "cpu_pico": 27.6,
+          "ram_pico": 83.1,
+          "disco_pico": 82.8
+        }
+      }
+    },
+    "laptop-AURORA": {
+      "pico_mes": {
+        "cpu": 63.2,
+        "ram": 86.2,
+        "disco": 83.4
+      },
+      "dias": {
+        "2026-05-01": {
+          "cpu_pico": 56.1,
+          "ram_pico": 76.7,
+          "disco_pico": 76.9
+        },
+        "2026-05-02": {
+          "cpu_pico": 36.5,
+          "ram_pico": 74.3,
+          "disco_pico": 81.0
+        },
+        "2026-05-03": {
+          "cpu_pico": 30.0,
+          "ram_pico": 77.2,
+          "disco_pico": 70.8
+        },
+        "2026-05-04": {
+          "cpu_pico": 38.1,
+          "ram_pico": 67.8,
+          "disco_pico": 75.1
+        },
+        "2026-05-05": {
+          "cpu_pico": 53.9,
+          "ram_pico": 64.3,
+          "disco_pico": 74.8
+        },
+        "2026-05-06": {
+          "cpu_pico": 49.5,
+          "ram_pico": 60.4,
+          "disco_pico": 71.2
+        },
+        "2026-05-07": {
+          "cpu_pico": 54.6,
+          "ram_pico": 57.4,
+          "disco_pico": 76.4
+        },
+        "2026-05-08": {
+          "cpu_pico": 49.2,
+          "ram_pico": 60.2,
+          "disco_pico": 74.0
+        },
+        "2026-05-09": {
+          "cpu_pico": 34.0,
+          "ram_pico": 70.2,
+          "disco_pico": 77.0
+        },
+        "2026-05-10": {
+          "cpu_pico": 22.7,
+          "ram_pico": 83.0,
+          "disco_pico": 74.9
+        },
+        "2026-05-11": {
+          "cpu_pico": 63.2,
+          "ram_pico": 82.9,
+          "disco_pico": 80.7
+        },
+        "2026-05-12": {
+          "cpu_pico": 50.1,
+          "ram_pico": 66.3,
+          "disco_pico": 69.3
+        },
+        "2026-05-13": {
+          "cpu_pico": 49.1,
+          "ram_pico": 75.7,
+          "disco_pico": 78.7
+        },
+        "2026-05-14": {
+          "cpu_pico": 59.7,
+          "ram_pico": 82.7,
+          "disco_pico": 75.7
+        },
+        "2026-05-15": {
+          "cpu_pico": 56.7,
+          "ram_pico": 57.8,
+          "disco_pico": 83.4
+        },
+        "2026-05-16": {
+          "cpu_pico": 53.4,
+          "ram_pico": 68.1,
+          "disco_pico": 74.4
+        },
+        "2026-05-17": {
+          "cpu_pico": 56.0,
+          "ram_pico": 72.9,
+          "disco_pico": 73.7
+        },
+        "2026-05-18": {
+          "cpu_pico": 26.8,
+          "ram_pico": 75.4,
+          "disco_pico": 80.7
+        },
+        "2026-05-19": {
+          "cpu_pico": 47.0,
+          "ram_pico": 74.3,
+          "disco_pico": 76.7
+        },
+        "2026-05-20": {
+          "cpu_pico": 29.8,
+          "ram_pico": 75.7,
+          "disco_pico": 75.6
+        },
+        "2026-05-21": {
+          "cpu_pico": 35.3,
+          "ram_pico": 61.4,
+          "disco_pico": 70.2
+        },
+        "2026-05-22": {
+          "cpu_pico": 26.4,
+          "ram_pico": 64.2,
+          "disco_pico": 74.8
+        },
+        "2026-05-23": {
+          "cpu_pico": 52.3,
+          "ram_pico": 67.1,
+          "disco_pico": 78.7
+        },
+        "2026-05-24": {
+          "cpu_pico": 23.3,
+          "ram_pico": 69.3,
+          "disco_pico": 78.4
+        },
+        "2026-05-25": {
+          "cpu_pico": 55.3,
+          "ram_pico": 86.2,
+          "disco_pico": 78.8
+        },
+        "2026-05-26": {
+          "cpu_pico": 59.9,
+          "ram_pico": 62.3,
+          "disco_pico": 80.9
+        },
+        "2026-05-27": {
+          "cpu_pico": 57.4,
+          "ram_pico": 74.3,
+          "disco_pico": 81.3
+        },
+        "2026-05-28": {
+          "cpu_pico": 29.6,
+          "ram_pico": 77.1,
+          "disco_pico": 81.5
+        },
+        "2026-05-29": {
+          "cpu_pico": 21.0,
+          "ram_pico": 80.2,
+          "disco_pico": 69.9
+        },
+        "2026-05-30": {
+          "cpu_pico": 57.7,
+          "ram_pico": 69.1,
+          "disco_pico": 81.3
+        },
+        "2026-05-31": {
+          "cpu_pico": 24.0,
+          "ram_pico": 69.0,
+          "disco_pico": 76.3
+        }
+      }
+    },
+    "laptop-NZ13": {
+      "pico_mes": {
+        "cpu": 63.5,
+        "ram": 86.0,
+        "disco": 83.5
+      },
+      "dias": {
+        "2026-05-01": {
+          "cpu_pico": 23.3,
+          "ram_pico": 85.5,
+          "disco_pico": 71.7
+        },
+        "2026-05-02": {
+          "cpu_pico": 37.5,
+          "ram_pico": 69.6,
+          "disco_pico": 68.6
+        },
+        "2026-05-03": {
+          "cpu_pico": 39.4,
+          "ram_pico": 85.4,
+          "disco_pico": 77.5
+        },
+        "2026-05-04": {
+          "cpu_pico": 48.6,
+          "ram_pico": 67.8,
+          "disco_pico": 76.6
+        },
+        "2026-05-05": {
+          "cpu_pico": 39.6,
+          "ram_pico": 68.8,
+          "disco_pico": 74.1
+        },
+        "2026-05-06": {
+          "cpu_pico": 58.3,
+          "ram_pico": 70.1,
+          "disco_pico": 70.2
+        },
+        "2026-05-07": {
+          "cpu_pico": 34.3,
+          "ram_pico": 68.7,
+          "disco_pico": 71.4
+        },
+        "2026-05-08": {
+          "cpu_pico": 26.4,
+          "ram_pico": 60.8,
+          "disco_pico": 77.3
+        },
+        "2026-05-09": {
+          "cpu_pico": 57.0,
+          "ram_pico": 59.4,
+          "disco_pico": 73.9
+        },
+        "2026-05-10": {
+          "cpu_pico": 52.7,
+          "ram_pico": 67.7,
+          "disco_pico": 75.9
+        },
+        "2026-05-11": {
+          "cpu_pico": 46.7,
+          "ram_pico": 78.9,
+          "disco_pico": 80.2
+        },
+        "2026-05-12": {
+          "cpu_pico": 45.8,
+          "ram_pico": 86.0,
+          "disco_pico": 69.5
+        },
+        "2026-05-13": {
+          "cpu_pico": 58.8,
+          "ram_pico": 82.9,
+          "disco_pico": 82.6
+        },
+        "2026-05-14": {
+          "cpu_pico": 53.4,
+          "ram_pico": 59.4,
+          "disco_pico": 78.2
+        },
+        "2026-05-15": {
+          "cpu_pico": 41.9,
+          "ram_pico": 66.9,
+          "disco_pico": 74.0
+        },
+        "2026-05-16": {
+          "cpu_pico": 43.0,
+          "ram_pico": 61.6,
+          "disco_pico": 75.6
+        },
+        "2026-05-17": {
+          "cpu_pico": 40.3,
+          "ram_pico": 78.6,
+          "disco_pico": 80.8
+        },
+        "2026-05-18": {
+          "cpu_pico": 46.6,
+          "ram_pico": 65.3,
+          "disco_pico": 74.7
+        },
+        "2026-05-19": {
+          "cpu_pico": 63.4,
+          "ram_pico": 77.8,
+          "disco_pico": 77.8
+        },
+        "2026-05-20": {
+          "cpu_pico": 63.5,
+          "ram_pico": 57.4,
+          "disco_pico": 68.2
+        },
+        "2026-05-21": {
+          "cpu_pico": 39.7,
+          "ram_pico": 60.2,
+          "disco_pico": 77.5
+        },
+        "2026-05-22": {
+          "cpu_pico": 55.8,
+          "ram_pico": 68.0,
+          "disco_pico": 82.8
+        },
+        "2026-05-23": {
+          "cpu_pico": 54.6,
+          "ram_pico": 60.1,
+          "disco_pico": 76.1
+        },
+        "2026-05-24": {
+          "cpu_pico": 52.3,
+          "ram_pico": 63.0,
+          "disco_pico": 72.4
+        },
+        "2026-05-25": {
+          "cpu_pico": 24.1,
+          "ram_pico": 81.8,
+          "disco_pico": 83.5
+        },
+        "2026-05-26": {
+          "cpu_pico": 37.2,
+          "ram_pico": 68.0,
+          "disco_pico": 83.1
+        },
+        "2026-05-27": {
+          "cpu_pico": 51.6,
+          "ram_pico": 74.5,
+          "disco_pico": 74.5
+        },
+        "2026-05-28": {
+          "cpu_pico": 52.2,
+          "ram_pico": 58.8,
+          "disco_pico": 75.0
+        },
+        "2026-05-29": {
+          "cpu_pico": 47.0,
+          "ram_pico": 84.9,
+          "disco_pico": 78.8
+        },
+        "2026-05-30": {
+          "cpu_pico": 51.1,
+          "ram_pico": 58.3,
+          "disco_pico": 71.1
+        },
+        "2026-05-31": {
+          "cpu_pico": 38.2,
+          "ram_pico": 81.0,
+          "disco_pico": 70.0
+        }
+      }
+    },
+    "laptop-LUANA": {
+      "pico_mes": {
+        "cpu": 62.1,
+        "ram": 86.1,
+        "disco": 82.3
+      },
+      "dias": {
+        "2026-05-01": {
+          "cpu_pico": 58.2,
+          "ram_pico": 75.2,
+          "disco_pico": 76.4
+        },
+        "2026-05-02": {
+          "cpu_pico": 20.8,
+          "ram_pico": 75.5,
+          "disco_pico": 75.7
+        },
+        "2026-05-03": {
+          "cpu_pico": 46.5,
+          "ram_pico": 69.7,
+          "disco_pico": 74.3
+        },
+        "2026-05-04": {
+          "cpu_pico": 54.5,
+          "ram_pico": 71.6,
+          "disco_pico": 79.1
+        },
+        "2026-05-05": {
+          "cpu_pico": 35.1,
+          "ram_pico": 58.7,
+          "disco_pico": 70.9
+        },
+        "2026-05-06": {
+          "cpu_pico": 45.6,
+          "ram_pico": 84.6,
+          "disco_pico": 79.5
+        },
+        "2026-05-07": {
+          "cpu_pico": 58.5,
+          "ram_pico": 86.1,
+          "disco_pico": 69.4
+        },
+        "2026-05-08": {
+          "cpu_pico": 48.4,
+          "ram_pico": 82.5,
+          "disco_pico": 80.8
+        },
+        "2026-05-09": {
+          "cpu_pico": 38.2,
+          "ram_pico": 67.7,
+          "disco_pico": 79.2
+        },
+        "2026-05-10": {
+          "cpu_pico": 38.6,
+          "ram_pico": 60.1,
+          "disco_pico": 77.4
+        },
+        "2026-05-11": {
+          "cpu_pico": 24.4,
+          "ram_pico": 62.4,
+          "disco_pico": 78.1
+        },
+        "2026-05-12": {
+          "cpu_pico": 34.9,
+          "ram_pico": 60.1,
+          "disco_pico": 79.0
+        },
+        "2026-05-13": {
+          "cpu_pico": 61.4,
+          "ram_pico": 64.0,
+          "disco_pico": 80.2
+        },
+        "2026-05-14": {
+          "cpu_pico": 31.5,
+          "ram_pico": 70.7,
+          "disco_pico": 68.5
+        },
+        "2026-05-15": {
+          "cpu_pico": 32.1,
+          "ram_pico": 78.5,
+          "disco_pico": 76.8
+        },
+        "2026-05-16": {
+          "cpu_pico": 24.6,
+          "ram_pico": 69.8,
+          "disco_pico": 81.9
+        },
+        "2026-05-17": {
+          "cpu_pico": 32.8,
+          "ram_pico": 82.7,
+          "disco_pico": 76.5
+        },
+        "2026-05-18": {
+          "cpu_pico": 22.9,
+          "ram_pico": 67.1,
+          "disco_pico": 75.8
+        },
+        "2026-05-19": {
+          "cpu_pico": 36.0,
+          "ram_pico": 63.5,
+          "disco_pico": 82.3
+        },
+        "2026-05-20": {
+          "cpu_pico": 21.7,
+          "ram_pico": 67.6,
+          "disco_pico": 74.8
+        },
+        "2026-05-21": {
+          "cpu_pico": 41.2,
+          "ram_pico": 79.0,
+          "disco_pico": 68.2
+        },
+        "2026-05-22": {
+          "cpu_pico": 62.1,
+          "ram_pico": 79.2,
+          "disco_pico": 79.8
+        },
+        "2026-05-23": {
+          "cpu_pico": 58.1,
+          "ram_pico": 80.3,
+          "disco_pico": 76.9
+        },
+        "2026-05-24": {
+          "cpu_pico": 48.5,
+          "ram_pico": 81.8,
+          "disco_pico": 78.4
+        },
+        "2026-05-25": {
+          "cpu_pico": 45.2,
+          "ram_pico": 75.8,
+          "disco_pico": 74.6
+        },
+        "2026-05-26": {
+          "cpu_pico": 28.9,
+          "ram_pico": 84.1,
+          "disco_pico": 69.0
+        },
+        "2026-05-27": {
+          "cpu_pico": 61.2,
+          "ram_pico": 70.4,
+          "disco_pico": 73.0
+        },
+        "2026-05-28": {
+          "cpu_pico": 33.2,
+          "ram_pico": 60.1,
+          "disco_pico": 76.2
+        },
+        "2026-05-29": {
+          "cpu_pico": 54.4,
+          "ram_pico": 70.6,
+          "disco_pico": 75.9
+        },
+        "2026-05-30": {
+          "cpu_pico": 23.3,
+          "ram_pico": 74.4,
+          "disco_pico": 74.4
+        },
+        "2026-05-31": {
+          "cpu_pico": 32.3,
+          "ram_pico": 85.5,
+          "disco_pico": 80.5
+        }
+      }
+    },
+    "laptop-LUIZ": {
+      "pico_mes": {
+        "cpu": 63.0,
+        "ram": 86.5,
+        "disco": 82.8
+      },
+      "dias": {
+        "2026-05-01": {
+          "cpu_pico": 63.0,
+          "ram_pico": 80.3,
+          "disco_pico": 73.8
+        },
+        "2026-05-02": {
+          "cpu_pico": 30.6,
+          "ram_pico": 80.5,
+          "disco_pico": 70.4
+        },
+        "2026-05-03": {
+          "cpu_pico": 39.8,
+          "ram_pico": 77.6,
+          "disco_pico": 69.1
+        },
+        "2026-05-04": {
+          "cpu_pico": 57.8,
+          "ram_pico": 76.3,
+          "disco_pico": 68.2
+        },
+        "2026-05-05": {
+          "cpu_pico": 37.9,
+          "ram_pico": 73.6,
+          "disco_pico": 72.2
+        },
+        "2026-05-06": {
+          "cpu_pico": 57.4,
+          "ram_pico": 74.4,
+          "disco_pico": 81.3
+        },
+        "2026-05-07": {
+          "cpu_pico": 53.7,
+          "ram_pico": 59.5,
+          "disco_pico": 71.6
+        },
+        "2026-05-08": {
+          "cpu_pico": 20.7,
+          "ram_pico": 79.7,
+          "disco_pico": 72.6
+        },
+        "2026-05-09": {
+          "cpu_pico": 61.0,
+          "ram_pico": 86.5,
+          "disco_pico": 81.3
+        },
+        "2026-05-10": {
+          "cpu_pico": 31.3,
+          "ram_pico": 73.8,
+          "disco_pico": 77.2
+        },
+        "2026-05-11": {
+          "cpu_pico": 43.5,
+          "ram_pico": 66.9,
+          "disco_pico": 73.8
+        },
+        "2026-05-12": {
+          "cpu_pico": 52.3,
+          "ram_pico": 64.8,
+          "disco_pico": 74.9
+        },
+        "2026-05-13": {
+          "cpu_pico": 38.6,
+          "ram_pico": 66.1,
+          "disco_pico": 77.7
+        },
+        "2026-05-14": {
+          "cpu_pico": 36.1,
+          "ram_pico": 80.6,
+          "disco_pico": 80.6
+        },
+        "2026-05-15": {
+          "cpu_pico": 44.7,
+          "ram_pico": 75.7,
+          "disco_pico": 79.4
+        },
+        "2026-05-16": {
+          "cpu_pico": 30.9,
+          "ram_pico": 80.4,
+          "disco_pico": 76.5
+        },
+        "2026-05-17": {
+          "cpu_pico": 59.7,
+          "ram_pico": 83.6,
+          "disco_pico": 82.8
+        },
+        "2026-05-18": {
+          "cpu_pico": 53.8,
+          "ram_pico": 76.7,
+          "disco_pico": 71.8
+        },
+        "2026-05-19": {
+          "cpu_pico": 25.8,
+          "ram_pico": 58.5,
+          "disco_pico": 69.6
+        },
+        "2026-05-20": {
+          "cpu_pico": 59.1,
+          "ram_pico": 70.9,
+          "disco_pico": 68.5
+        },
+        "2026-05-21": {
+          "cpu_pico": 37.1,
+          "ram_pico": 70.4,
+          "disco_pico": 78.2
+        },
+        "2026-05-22": {
+          "cpu_pico": 61.1,
+          "ram_pico": 86.5,
+          "disco_pico": 80.4
+        },
+        "2026-05-23": {
+          "cpu_pico": 27.6,
+          "ram_pico": 79.2,
+          "disco_pico": 74.0
+        },
+        "2026-05-24": {
+          "cpu_pico": 39.2,
+          "ram_pico": 59.6,
+          "disco_pico": 69.1
+        },
+        "2026-05-25": {
+          "cpu_pico": 57.8,
+          "ram_pico": 81.3,
+          "disco_pico": 74.4
+        },
+        "2026-05-26": {
+          "cpu_pico": 33.9,
+          "ram_pico": 60.7,
+          "disco_pico": 70.6
+        },
+        "2026-05-27": {
+          "cpu_pico": 47.7,
+          "ram_pico": 84.9,
+          "disco_pico": 69.8
+        },
+        "2026-05-28": {
+          "cpu_pico": 21.4,
+          "ram_pico": 67.4,
+          "disco_pico": 76.5
+        },
+        "2026-05-29": {
+          "cpu_pico": 51.4,
+          "ram_pico": 67.8,
+          "disco_pico": 79.3
+        },
+        "2026-05-30": {
+          "cpu_pico": 62.1,
+          "ram_pico": 61.7,
+          "disco_pico": 75.6
+        },
+        "2026-05-31": {
+          "cpu_pico": 56.0,
+          "ram_pico": 78.1,
+          "disco_pico": 76.7
+        }
+      }
+    },
+    "laptop-MATHEUS": {
+      "pico_mes": {
+        "cpu": 62.8,
+        "ram": 86.3,
+        "disco": 83.8
+      },
+      "dias": {
+        "2026-05-01": {
+          "cpu_pico": 21.0,
+          "ram_pico": 81.0,
+          "disco_pico": 68.9
+        },
+        "2026-05-02": {
+          "cpu_pico": 45.8,
+          "ram_pico": 77.6,
+          "disco_pico": 71.1
+        },
+        "2026-05-03": {
+          "cpu_pico": 40.7,
+          "ram_pico": 67.8,
+          "disco_pico": 77.4
+        },
+        "2026-05-04": {
+          "cpu_pico": 28.7,
+          "ram_pico": 79.5,
+          "disco_pico": 80.0
+        },
+        "2026-05-05": {
+          "cpu_pico": 31.9,
+          "ram_pico": 86.3,
+          "disco_pico": 69.5
+        },
+        "2026-05-06": {
+          "cpu_pico": 52.7,
+          "ram_pico": 58.4,
+          "disco_pico": 71.1
+        },
+        "2026-05-07": {
+          "cpu_pico": 46.5,
+          "ram_pico": 75.2,
+          "disco_pico": 72.5
+        },
+        "2026-05-08": {
+          "cpu_pico": 51.8,
+          "ram_pico": 85.1,
+          "disco_pico": 80.6
+        },
+        "2026-05-09": {
+          "cpu_pico": 31.2,
+          "ram_pico": 72.0,
+          "disco_pico": 79.3
+        },
+        "2026-05-10": {
+          "cpu_pico": 56.7,
+          "ram_pico": 60.9,
+          "disco_pico": 74.2
+        },
+        "2026-05-11": {
+          "cpu_pico": 22.0,
+          "ram_pico": 82.1,
+          "disco_pico": 70.7
+        },
+        "2026-05-12": {
+          "cpu_pico": 25.4,
+          "ram_pico": 68.7,
+          "disco_pico": 79.3
+        },
+        "2026-05-13": {
+          "cpu_pico": 57.2,
+          "ram_pico": 80.6,
+          "disco_pico": 71.3
+        },
+        "2026-05-14": {
+          "cpu_pico": 22.3,
+          "ram_pico": 57.2,
+          "disco_pico": 79.1
+        },
+        "2026-05-15": {
+          "cpu_pico": 25.0,
+          "ram_pico": 85.2,
+          "disco_pico": 76.6
+        },
+        "2026-05-16": {
+          "cpu_pico": 34.3,
+          "ram_pico": 57.9,
+          "disco_pico": 74.2
+        },
+        "2026-05-17": {
+          "cpu_pico": 30.7,
+          "ram_pico": 78.3,
+          "disco_pico": 71.2
+        },
+        "2026-05-18": {
+          "cpu_pico": 61.8,
+          "ram_pico": 77.4,
+          "disco_pico": 73.5
+        },
+        "2026-05-19": {
+          "cpu_pico": 33.7,
+          "ram_pico": 81.7,
+          "disco_pico": 74.7
+        },
+        "2026-05-20": {
+          "cpu_pico": 62.7,
+          "ram_pico": 57.9,
+          "disco_pico": 83.8
+        },
+        "2026-05-21": {
+          "cpu_pico": 53.4,
+          "ram_pico": 57.4,
+          "disco_pico": 77.1
+        },
+        "2026-05-22": {
+          "cpu_pico": 60.2,
+          "ram_pico": 71.8,
+          "disco_pico": 72.8
+        },
+        "2026-05-23": {
+          "cpu_pico": 23.9,
+          "ram_pico": 78.6,
+          "disco_pico": 75.4
+        },
+        "2026-05-24": {
+          "cpu_pico": 37.3,
+          "ram_pico": 59.8,
+          "disco_pico": 79.6
+        },
+        "2026-05-25": {
+          "cpu_pico": 24.0,
+          "ram_pico": 78.3,
+          "disco_pico": 71.4
+        },
+        "2026-05-26": {
+          "cpu_pico": 48.1,
+          "ram_pico": 73.8,
+          "disco_pico": 70.5
+        },
+        "2026-05-27": {
+          "cpu_pico": 52.8,
+          "ram_pico": 73.3,
+          "disco_pico": 83.4
+        },
+        "2026-05-28": {
+          "cpu_pico": 23.7,
+          "ram_pico": 79.4,
+          "disco_pico": 83.1
+        },
+        "2026-05-29": {
+          "cpu_pico": 62.8,
+          "ram_pico": 85.3,
+          "disco_pico": 83.1
+        },
+        "2026-05-30": {
+          "cpu_pico": 29.0,
+          "ram_pico": 83.5,
+          "disco_pico": 76.1
+        },
+        "2026-05-31": {
+          "cpu_pico": 49.2,
+          "ram_pico": 78.1,
+          "disco_pico": 68.0
+        }
+      }
+    }
+  }
+}

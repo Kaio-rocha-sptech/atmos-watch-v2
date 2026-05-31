@@ -495,7 +495,7 @@ def executar_etl():
             salvar_client_s3(json_client, empresa)
 
             # DASHBOARD GESTOR INCIDENTES
-            incidentes = processar_incidente(df_raw, empresa)
+            incidentes = processar_incidente(df_raw)
             metricas = processar_metricas(df_raw)
             salvar_dashboard_s3(incidentes, metricas, empresa)
 

@@ -4,7 +4,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 # carregar .env uma vez
-load_dotenv(".env")
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 def upload_s3(caminho_csv, empresa, hostname):
     # =========================
@@ -21,6 +21,7 @@ def upload_s3(caminho_csv, empresa, hostname):
         "s3",
         aws_access_key_id=aws_access_key,
         aws_secret_access_key=aws_secret_key,
+        aws_session_token=os.getenv("AWS_SESSION_TOKEN"),
         region_name=region,
         endpoint_url=endpoint
     )
@@ -43,7 +44,17 @@ def upload_s3(caminho_csv, empresa, hostname):
         print(f"❌ Erro no upload: {e}")
 
 print("KEY:", os.getenv("AWS_ACCESS_KEY_ID"))
-caminho_csv = "empresaX/kaio/kaio_20260408_115842.csv"
-empresa = "empresaX"
-hostname = 'laptop_nz13'
-upload_s3(caminho_csv, empresa, hostname)
+PASTA_LOCAL = "./empresaX"
+
+for servidor in os.listdir(PASTA_LOCAL):
+      pasta_servidor = os.path.join(PASTA_LOCAL, servidor)
+
+      if not os.path.isdir(pasta_servidor):
+          continue
+
+      for arquivo in os.listdir(pasta_servidor):
+          if not arquivo.endswith(".csv"):
+              continue
+
+          caminho = os.path.join(pasta_servidor, arquivo)
+          upload_s3(caminho, "empresaX", servidor)

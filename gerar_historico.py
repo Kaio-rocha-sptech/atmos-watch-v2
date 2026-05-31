@@ -98,6 +98,21 @@ def gerar_mes(mes, ano):
 
 
 import os
+import boto3
+from dotenv import load_dotenv
+
+load_dotenv(os.path.join(os.path.dirname(__file__), "Capturas - 2 sprint/.env"))
+
+s3 = boto3.client(
+    "s3",
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    aws_session_token=os.getenv("AWS_SESSION_TOKEN"),
+    region_name=os.getenv("AWS_DEFAULT_REGION")
+)
+
+BUCKET = os.getenv("S3_BUCKET_NAME")
+
 os.makedirs("historico", exist_ok=True)
 
 for mes, ano in MESES:
@@ -112,3 +127,10 @@ for mes, ano in MESES:
         for sv in dados["incidentes"].values()
     )
     print(f"Gerado: {nome} | Servidores: {len(SERVIDORES)} | Incidentes total: {total_inc}")
+
+    chave_s3 = f"client/{EMPRESA}/dashboard/client_{mes:02d}_{ano}.json"
+    try:
+        s3.upload_file(nome, BUCKET, chave_s3)
+        print(f"✅ Upload OK: s3://{BUCKET}/{chave_s3}")
+    except Exception as e:
+        print(f"❌ Erro no upload: {e}")
