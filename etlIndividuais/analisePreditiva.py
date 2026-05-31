@@ -10,8 +10,7 @@ from io import BytesIO
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
-
-load_dotenv(r"C:/Users/User/OneDrive - SPTech School/Attachments/.env")
+load_dotenv(r"D:/Luana/Desktop/ATMOS_ETL/atmos-watch-v2/.env")
 
 BUCKET = os.getenv("S3_BUCKET_NAME")
 
@@ -23,14 +22,88 @@ s3 = boto3.client(
     region_name=os.getenv("AWS_DEFAULT_REGION")
 )
 
-TempoDeCaptura = 10 * 60
-EMPRESA = 1
-SERVIDOR = "Servidor_Metereologia"
+FKEMPRESA = 1
+tempoCaptura = 10 * 60  
+
+def carregar_previsoes_s3():
+    key = f"previsoes/{FKEMPRESA}.json"
+
+    try:
+        obj = s3.get_object(Bucket=BUCKET, Key=key)
+        return json.loads(obj["Body"].read().decode("utf-8"))
+    except:
+        return []
+
+
+def salvar_previsoes_s3(previsoes):
+    key = f"previsoes/{FKEMPRESA}.json"
+
+    s3.put_object(
+        Bucket=BUCKET,
+        Key=key,
+        Body=json.dumps(previsoes, ensure_ascii=False).encode("utf-8"),
+        ContentType="application/json"
+    )
+
+
+def salvar_raw_s3(leitura):
+
+    key = f"raw/{FKEMPRESA}/raw.csv"
+
+    try:
+        obj = s3.get_object(Bucket=BUCKET, Key=key)
+        conteudo = obj["Body"].read().decode("utf-8")
+    except:
+        conteudo = "timestamp,cpu,temperatura\n"
+
+    conteudo += (
+        f"{leitura['timestamp']},"
+        f"{leitura['cpu']},"
+        f"{leitura['temperatura']}\n"
+    )
+
+    s3.put_object(
+        Bucket=BUCKET,
+        Key=key,
+        Body=conteudo.encode("utf-8")
+    )
+
+
+def carregar_raw_s3():
+
+    key = f"raw/{FKEMPRESA}/raw.csv"
+
+    obj = s3.get_object(
+        Bucket=BUCKET,
+        Key=key
+    )
+
+    return pd.read_csv(
+        BytesIO(obj["Body"].read())
+    )
+
+
+def salvar_client_s3(dados):
+
+    key = f"client/{FKEMPRESA}.json"
+
+    s3.put_object(
+        Bucket=BUCKET,
+        Key=key,
+        Body=json.dumps(
+            dados,
+            ensure_ascii=False
+        ).encode("utf-8"),
+        ContentType="application/json"
+    )
 
 
 def raw():
+
     cpu = psutil.cpu_percent(interval=1)
+
     variacao = random.uniform(-1, 1)
+
     temperatura = 45 + (cpu * 0.5) + variacao
 
     return {
@@ -40,130 +113,220 @@ def raw():
     }
 
 
-def salvar_raw_s3(leitura):
+def calcular_regressao(historico):
 
-    key = f"raw/{SERVIDOR}/raw.csv"
-
-    try:
-        obj = s3.get_object(Bucket=BUCKET, Key=key)
-        conteudo = obj["Body"].read().decode("utf-8")
-    except:
-        conteudo = "timestamp,cpu,temperatura\n"
-
-    nova_linha = f"{leitura['timestamp']},{leitura['cpu']},{leitura['temperatura']}\n"
-    conteudo += nova_linha
-
-    s3.put_object(
-        Bucket=BUCKET,
-        Key=key,
-        Body=conteudo.encode("utf-8")
-    )
-
-    print(f"raw enviado {key}")
-
-
-def carregar_raw_s3():
-
-    key = f"raw/{SERVIDOR}/raw.csv"
-
-    obj = s3.get_object(Bucket=BUCKET, Key=key)
-
-    return pd.read_csv(BytesIO(obj["Body"].read()))
-
-
-def regressao_cpu(df):
-    if len(df) < 10:
+    if len(historico) < 2:
         return 0, 0
 
-    x = df["cpu"].values
-    y = df["temperatura"].values
-
-    a, b = np.polyfit(x, y, 1)
-    return float(a), float(b)
-
-
-def regressao_tempo(df):
-    if len(df) < 10:
-        return None, None
-
-    x = np.arange(len(df))
-    y = df["temperatura"].values
-
-    a, b = np.polyfit(x, y, 1)
-    return float(a), float(b)
-
-
-def trusted(df):
-
-    df = df.tail(100)
-
-    a, b = regressao_cpu(df)
-    a_t, b_t = regressao_tempo(df)
-
-    cpu_p90 = round(np.percentile(df["cpu"], 90), 1)
-    temperatura_atual = float(df.iloc[-1]["temperatura"])
-
-    if a_t is not None:
-        temperatura_prevista = round(a_t * (len(df) + 6) + b_t, 1)
-    else:
-        temperatura_prevista = temperatura_atual
-
-    impacto = round(a * 10, 2)
-
-    status = (
-        "CRITICO" if temperatura_atual >= 90 else
-        "ALERTA" if temperatura_atual >= 80 else
-        "NORMAL"
+    x = np.array(
+        [d["cpu"] for d in historico]
     )
 
-    historico = df.to_dict(orient="records")
+    y = np.array(
+        [d["temperatura"] for d in historico]
+    )
 
-    regressao = [
-        {"x": x, "y": round(a * x + b, 1)}
-        for x in range(0, 101, 10)
-    ]
+    a, b = np.polyfit(x, y, 1)
 
+    return float(a), float(b)
+
+
+
+def calcular_regressao_tempo(historico):
+
+    n = len(historico)
+
+    if n < 10:
+        return None, None
+
+    x = np.arange(n)
+
+    y = np.array(
+        [d["temperatura"] for d in historico]
+    )
+
+    a, b = np.polyfit(x, y, 1)
+
+    return float(a), float(b)
+
+
+def buscar_temperatura_real(
+    historico,
+    timestamp_alvo
+):
+
+    for leitura in reversed(historico):
+
+        if leitura["timestamp"] == timestamp_alvo:
+            return leitura["temperatura"]
+
+    return None
+
+
+def atualizar_previsoes(
+    previsoes,
+    historico
+):
 
     agora = datetime.now()
-    previsoes = []
 
-    for i in range(1, 25):
-        futuro = agora + timedelta(minutes=i * 10)
+    for prev in previsoes:
+
+        if prev["temperaturaReal"] is not None:
+            continue
+
+        horario_prev = datetime.strptime(
+            prev["timestamp"],
+            "%H:%M"
+        )
+
+        horario_atual = datetime.strptime(
+            agora.strftime("%H:%M"),
+            "%H:%M"
+        )
+
+        if horario_atual >= horario_prev:
+
+            temp_real = buscar_temperatura_real(
+                historico,
+                prev["timestamp"]
+            )
+
+            if temp_real is not None:
+                prev["temperaturaReal"] = temp_real
+
+    return previsoes
+
+
+
+def trusted(df, previsoes):
+
+    historico = (
+        df.tail(100)
+        .to_dict(orient="records")
+    )
+
+    a, b = calcular_regressao(historico)
+
+    cpu_p90 = round(
+        float(
+            np.percentile(
+                df["cpu"],
+                90
+            )
+        ),
+        1
+    )
+
+    temperatura_atual = float(
+        historico[-1]["temperatura"]
+    )
+
+    a_tempo, b_tempo = calcular_regressao_tempo(
+        historico
+    )
+
+    if a_tempo is not None:
+
+        n = len(historico)
+
+        temperatura_prevista = round(float(a_tempo * (n + 6) +b_tempo), 1)
+
+        temperatura_prevista = max(25.0, min(temperatura_prevista,120.0 )  )
+
+        if abs(a_tempo) < 0.05:
+
+            temps = [
+                d["temperatura"]
+                for d in historico
+            ]
+
+            temperatura_prevista = round(
+                float(
+                    np.mean(
+                        temps[-10:]
+                    )
+                ),
+                1
+            )
+
+        temperatura_prevista = max(
+            temperatura_atual,
+            temperatura_prevista
+        )
+
+    else:
+
+        temperatura_prevista = round(
+            temperatura_atual,
+            1
+        )
+
+    timestamp_1h = (
+        datetime.now() +
+        timedelta(hours=1)
+    ).strftime("%H:%M")
+
+    existentes = [
+        p["timestamp"]
+        for p in previsoes
+    ]
+
+    if timestamp_1h not in existentes:
 
         previsoes.append({
-            "timestamp": futuro.strftime("%H:%M"),
-            "temperaturaPrevista": round(temperatura_atual + random.uniform(-3, 3), 1),
+            "timestamp": timestamp_1h,
+            "temperaturaPrevista": temperatura_prevista,
             "temperaturaReal": None
         })
 
+    previsoes = atualizar_previsoes(
+        previsoes,
+        historico
+    )
+
+    previsoes = previsoes[-144:]
+
+    impacto_por_10pct = round(
+        a * 10,
+        2
+    )
+
+    regressao = []
+
+    for x in range(0, 101, 10):
+
+        regressao.append({
+            "x": x,
+            "y": round(
+                (a * x) + b,
+                1
+            )
+        })
+
+    status = (
+        "CRITICO"
+        if temperatura_atual >= 85
+        else "ALERTA"
+        if temperatura_atual >= 70
+        else "NORMAL"
+    )
+
     return {
         "kpis": {
-            "servidor": SERVIDOR,
+            "fkEmpresa": FKEMPRESA,
             "cpuP90": cpu_p90,
             "temperaturaAtual": temperatura_atual,
             "temperaturaPrevista": temperatura_prevista,
             "status": status,
-            "impactoCpuPor10pct": impacto
+            "impactoCpuPor10pct": impacto_por_10pct
         },
         "grafico": historico,
         "previsoes": previsoes,
         "regressao": regressao
-    }
+    }, previsoes
 
-
-def salvar_client_s3(dados):
-
-    key = f"client/{EMPRESA}/{SERVIDOR}.json"
-
-    s3.put_object(
-        Bucket=BUCKET,
-        Key=key,
-        Body=json.dumps(dados, ensure_ascii=False).encode("utf-8"),
-        ContentType="application/json"
-    )
-
-    print(f"client enviado {key}")
-
+previsoes = carregar_previsoes_s3()
 
 while True:
 
@@ -171,12 +334,23 @@ while True:
 
     salvar_raw_s3(leitura)
 
-    print(f"CPU {leitura['cpu']}% | Temp {leitura['temperatura']}°C")
-
     df = carregar_raw_s3()
 
-    dados = trusted(df)
+    dados, previsoes = trusted(
+        df,
+        previsoes
+    )
 
     salvar_client_s3(dados)
 
-    time.sleep(TempoDeCaptura)
+    salvar_previsoes_s3(previsoes)
+
+    print(
+        f"CPU: {leitura['cpu']}% | "
+        f"Temp: {leitura['temperatura']}°C | "
+        f"Prevista 1h: "
+        f"{dados['kpis']['temperaturaPrevista']}°C | "
+        f"Status: {dados['kpis']['status']}"
+    )
+
+    time.sleep(tempoCaptura)
