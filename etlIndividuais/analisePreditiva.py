@@ -200,18 +200,24 @@ def trusted(df, previsoes):
     )
 
     return {
-        "kpis": {
-            "fkEmpresa": FKEMPRESA,
-            "cpuP90": cpu_p90,
-            "temperaturaAtual": temperatura_atual,
-            "temperaturaPrevista": temperatura_prevista,
-            "status": status,
-            "impactoCpuPor10pct": impacto_por_10pct
-        },
-        "grafico": historico,
-        "previsoes": previsoes,
-        "regressao": regressao
-    }, previsoes
+    "kpis": {
+        "fkEmpresa": FKEMPRESA,
+        "cpuP90": cpu_p90,
+        "temperaturaAtual": temperatura_atual,
+        "temperaturaPrevista": temperatura_prevista,
+        "status": status,
+        "impactoCpuPor10pct": impacto_por_10pct
+    },
+    "hosts": [
+        {
+            "host_id": "Anderson",
+            "hostname": "laptop-ANDERSON",
+            "grafico": historico,
+            "previsoes": previsoes,
+            "regressao": regressao
+        }
+    ]
+}, previsoes
 
 previsoes = carregar_previsoes_s3()
 
