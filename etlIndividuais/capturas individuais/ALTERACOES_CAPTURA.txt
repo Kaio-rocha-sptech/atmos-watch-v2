@@ -1,0 +1,261 @@
+ALTERACOES REALIZADAS NO CAPTURA.PY
+
+Este documento explica o funcionamento atual do script Captura.py depois da
+junção dos scripts individuais de captura.
+
+
+1. OBJETIVO DO CAPTURA.PY
+
+O Captura.py passou a ser o script principal de coleta.
+
+Ele centraliza as capturas que antes estavam separadas em arquivos diferentes
+e executa tudo em um unico loop principal.
+
+Scripts incorporados:
+
+- Captura.py
+- processos.py
+- RAWanalisePreditiva.py
+- captura-and.py
+
+
+2. O QUE O SCRIPT CAPTURA AGORA
+
+O Captura.py executa quatro grupos principais de coleta.
+
+
+2.1. Captura principal de metricas do servidor
+
+Coleta informacoes como:
+
+- data e hora
+- CPU percentual
+- frequencia da CPU
+- uso de RAM
+- RAM usada e livre
+- uso de disco
+- disco usado, livre e total
+- throughput de disco
+- upload e download de rede
+- conexoes de rede
+- total de processos
+- identificador
+- hostname
+- empresa
+
+Esses dados sao salvos em CSV local dentro de:
+
+amostras/{EMPRESA}/{HOSTNAME}/
+
+Depois, no momento do upload, o arquivo e enviado para:
+
+raw/{EMPRESA}/{HOSTNAME}/nome_do_arquivo.csv
+
+
+2.2. Captura para analise preditiva
+
+A logica do RAWanalisePreditiva.py foi incorporada.
+
+Ela coleta:
+
+- timestamp
+- CPU
+- temperatura estimada
+
+Esses dados ficam em um CSV local:
+
+amostras/preditivo/{PREDITIVO_EMPRESA}/raw.csv
+
+No upload, esse arquivo e enviado para:
+
+raw/{PREDITIVO_EMPRESA}/raw.csv
+
+Esse caminho foi mantido para continuar compativel com a ETL_atmos.py, que le
+esse arquivo para gerar a analise preditiva.
+
+
+2.3. Captura analitica de processos
+
+A logica do processos.py foi incorporada.
+
+Ela gera um snapshot dos processos em execucao, agrupando processos parecidos
+e calculando indicadores como:
+
+- CPU por processo
+- RAM por processo
+- IO de disco
+- subprocessos
+- historico por processo
+- percentis
+- anomalias
+- score global
+- estatisticas globais
+
+O snapshot local continua sendo salvo em:
+
+snapshot_analitico.json
+
+O cache do historico dos processos fica em:
+
+cache_historico_processos.json
+
+No upload, o snapshot e enviado para:
+
+client/{EMPRESA}/processos/servidor/{HOSTNAME}/snapshot_{HOSTNAME}.json
+
+
+2.4. Captura climatica e carga operacional
+
+A logica do captura-and.py foi incorporada.
+
+Ela consulta a API Open-Meteo e salva uma medicao no MySQL, usando a tabela:
+
+analise_carga_climatica
+
+Dados usados:
+
+- temperatura externa
+- precipitacao
+- weather_code
+- tipo de evento climatico
+- requisicoes por minuto
+- CPU do servidor
+- faixa esperada
+- pressao operacional
+- nivel de risco
+
+Essa etapa depende de internet, variaveis de ambiente e conexao MySQL.
+
+Se ela falhar, o restante da captura continua rodando.
+
+
+3. UPLOAD CENTRALIZADO PARA O S3
+
+Antes, alguns scripts podiam enviar dados independentemente.
+
+Agora o Captura.py coordena os envios em uma unica etapa chamada:
+
+upload_pacote_s3()
+
+Essa etapa envia:
+
+- CSV principal de metricas
+- CSV raw da analise preditiva
+- snapshot JSON de processos
+
+Importante:
+
+Mesmo sendo uma etapa unica dentro do script, cada arquivo continua indo para
+seu proprio caminho no S3, porque eles possuem finalidades diferentes.
+
+
+4. LOOP PRINCIPAL
+
+O Captura.py roda em loop continuo.
+
+A cada ciclo ele tenta:
+
+1. coletar metricas principais do servidor
+2. atualizar o snapshot de processos
+3. coletar raw preditivo quando chegar o intervalo configurado
+4. executar a captura climatica quando chegar o intervalo configurado
+5. verificar se chegou o momento de enviar o pacote para o S3
+
+O intervalo principal de captura e configurado por:
+
+INTERVALO_CAPTURA
+
+Se nao for informado, o valor padrao e 60 segundos.
+
+
+5. VARIAVEIS DE AMBIENTE PRINCIPAIS
+
+Variaveis gerais:
+
+- S3_BUCKET_NAME
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- AWS_SESSION_TOKEN
+- AWS_DEFAULT_REGION
+- S3_ENDPOINT_URL
+
+Identificacao:
+
+- IDENTIFICADOR
+- EMPRESA
+
+Controle do loop:
+
+- INTERVALO_CAPTURA
+- UPLOAD_MAX_COLETAS
+- UPLOAD_INTERVALO_SEGUNDOS
+
+Analise preditiva:
+
+- PREDITIVO_EMPRESA
+- FKEMPRESA
+- PREDITIVO_INTERVALO_SEGUNDOS
+
+Processos:
+
+- MAX_HISTORICO_PROCESSOS
+- MAX_PROCESSOS_CLIENT
+
+Clima e MySQL:
+
+- OPEN_METEO_LATITUDE
+- OPEN_METEO_LONGITUDE
+- OPEN_METEO_TIMEZONE
+- ATMOS_REQUISICOES_MINUTO
+- ATMOS_SERVIDOR_ID
+- ATMOS_FAIXA_ESPERADA
+- DB_HOST
+- DB_DATABASE
+- DB_USER
+- DB_PASSWORD
+- DB_PORT
+
+
+6. COMPORTAMENTO EM CASO DE ERRO
+
+O script foi feito para continuar rodando mesmo se uma captura secundaria
+falhar.
+
+Exemplos:
+
+- se o MySQL nao estiver configurado, a captura climatica falha, mas a captura
+  principal continua
+- se a API Open-Meteo estiver indisponivel, a captura climatica falha, mas o
+  restante continua
+- se algum processo do sistema negar acesso, a captura de processos ignora
+  aquele processo e segue
+- se o S3 nao estiver configurado, o upload registra erro ou aviso
+
+
+7. PRINCIPAIS CUIDADOS
+
+- O Captura.py roda em loop infinito. Ele deve ser usado no servidor que sera
+  monitorado, nao dentro da Lambda.
+
+- O arquivo raw preditivo e enviado para raw/{PREDITIVO_EMPRESA}/raw.csv.
+  Esse caminho precisa continuar alinhado com a ETL_atmos.py.
+
+- A captura climatica grava dados diretamente no MySQL. Verifique as variaveis
+  DB_* antes de rodar em ambiente real.
+
+- O upload agora e coordenado pelo Captura.py. Evite rodar os scripts antigos
+  ao mesmo tempo para nao duplicar dados.
+
+- O script processos.py original gerava e enviava o snapshot sozinho. Agora
+  essa responsabilidade esta dentro do Captura.py.
+
+
+8. RESUMO FINAL
+
+O Captura.py virou o orquestrador principal das capturas.
+
+Ele coleta metricas do servidor, dados para analise preditiva, processos
+analiticos e dados climaticos/carga operacional.
+
+Os envios ao S3 foram centralizados em uma etapa unica, mantendo cada tipo de
+dado no caminho correto para ser consumido pela ETL_atmos.py e pelo front.

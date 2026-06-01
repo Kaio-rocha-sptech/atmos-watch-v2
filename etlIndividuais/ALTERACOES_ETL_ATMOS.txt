@@ -1,0 +1,256 @@
+ALTERACOES REALIZADAS NA ETL_ATMOS.PY
+
+Este documento descreve o funcionamento atual da ETL_atmos.py depois da
+mesclagem com as outras ETLs e dos ajustes feitos na analise preditiva.
+
+
+1. OBJETIVO DA ETL_ATMOS.PY
+
+A ETL_atmos.py ficou como a ETL principal do projeto.
+
+Ela executa, para cada empresa encontrada no S3:
+
+- leitura dos arquivos CSV da camada raw
+- transformacao dos dados para a camada trusted
+- geracao do JSON client principal
+- geracao do dashboard de incidentes e metricas
+- processamento da analise preditiva, quando houver raw preditivo disponivel
+
+Antes de processar as empresas do S3, ela tambem tenta executar a analise de
+carga climatica no MySQL, quando as variaveis de banco estiverem configuradas.
+
+A execucao principal e unica:
+
+python ETL_atmos.py
+
+Nao existe mais modo separado para rodar apenas a analise preditiva dentro da
+ETL_atmos.py.
+
+
+2. DASHBOARD DE INCIDENTES E METRICAS
+
+A logica de dashboard do arquivo dashIncidentesHistorico.py foi incorporada
+na ETL_atmos.py.
+
+O dashboard gera informacoes como:
+
+- total de incidentes no mes
+- incidentes por dia
+- componentes afetados: cpu, ram e disco
+- detalhes dos incidentes
+- pico diario de cpu, ram e disco
+- pico mensal de cpu, ram e disco
+
+O arquivo gerado continua sendo salvo em:
+
+client/{empresa}/dashboard/client_MM_AAAA.json
+
+Ponto de atencao:
+
+O dashboard considera o mes atual da data em que a ETL esta rodando. Se os
+dados usados forem de meses anteriores, o dashboard pode sair vazio ou com
+menos informacoes do que o esperado.
+
+
+3. ANALISE PREDITIVA
+
+A analise preditiva foi separada em duas responsabilidades:
+
+RAWanalisePreditiva.py
+
+Esse arquivo deve rodar localmente no servidor que sera monitorado.
+Ele captura CPU e estima temperatura, depois salva o raw preditivo no S3.
+
+Formato esperado do raw preditivo:
+
+raw/{empresa}/raw.csv
+
+Colunas esperadas:
+
+- timestamp
+- cpu
+- temperatura
+
+
+ETL_atmos.py
+
+A ETL_atmos.py nao captura mais dados locais e nao usa loop infinito para a
+analise preditiva.
+
+Ela apenas le o raw preditivo ja existente no S3, processa os dados e salva
+os resultados.
+
+Arquivos gerados pela analise preditiva:
+
+client/{empresa}.json
+previsoes/{empresa}.json
+
+Principais dados calculados:
+
+- cpuP90
+- temperaturaAtual
+- temperaturaPrevista
+- status: NORMAL, ALERTA ou CRITICO
+- impactoCpuPor10pct
+- historico para grafico
+- previsoes
+- regressao
+
+
+4. COMO A ANALISE PREDITIVA RODA AGORA
+
+A analise preditiva e chamada dentro do fluxo principal da ETL, depois do
+dashboard da empresa.
+
+Fluxo simplificado:
+
+1. A ETL processa trusted e client principal.
+2. A ETL gera o dashboard de incidentes.
+3. A ETL tenta executar a analise preditiva daquela empresa.
+4. Se existir raw preditivo valido, ela gera os arquivos preditivos.
+5. Se nao existir raw preditivo ou ele estiver invalido, a ETL registra um
+   aviso e continua sem quebrar o restante do processo.
+
+Ponto de atencao:
+
+A analise preditiva depende da biblioteca numpy no ambiente da Lambda.
+Se numpy nao estiver disponivel, somente essa etapa deve falhar; a ETL
+principal continua rodando.
+
+
+5. PROTECAO CONTRA CSV COM FORMATO DIFERENTE
+
+A ETL principal agora valida o formato dos CSVs antes de transformar os dados.
+
+Para o processamento principal, sao esperadas colunas como:
+
+- datahora
+- identificador
+- hostname
+- cpu_perc
+- cpu_freq
+- ram_perc
+- ram_usada
+- ram_livre
+- disco_perc
+- disco_usado
+- disco_livre
+- disco_total
+- disco_throughput
+- upload
+- download
+- conexoes
+- total_processos
+
+Se um CSV nao tiver esse formato, ele e ignorado no processamento principal.
+
+Isso foi necessario porque o raw preditivo usa outro formato:
+
+- timestamp
+- cpu
+- temperatura
+
+Ponto de atencao:
+
+Se algum CSV valido da ETL principal estiver com nome de coluna diferente,
+ele tambem pode ser ignorado. Nesse caso, o log mostra quais colunas estao
+faltando.
+
+
+6. O QUE FOI REMOVIDO DA ETL_ATMOS.PY
+
+Foram removidos da execucao ativa da ETL_atmos.py:
+
+- captura local de CPU com psutil
+- simulacao local de temperatura
+- loop infinito da analise preditiva
+- uso de time.sleep dentro da ETL principal
+- modo separado ETL_ATMOS_MODO para rodar apenas a analise preditiva
+
+Essas responsabilidades agora ficam fora da ETL principal.
+
+O coletor local fica no arquivo:
+
+RAWanalisePreditiva.py
+
+
+7. ANALISE DE CARGA CLIMATICA MYSQL
+
+A ETL.py foi incorporada na ETL_atmos.py como uma etapa de analise de carga
+climatica usando MySQL.
+
+Essa etapa trabalha com a tabela:
+
+analise_carga_climatica
+
+Ela calcula e atualiza:
+
+- faixa_esperada
+- pressao_operacional
+- nivel_risco
+
+A classificacao de pressao segue esta regra:
+
+- ate 100% da faixa esperada: baixa / baixo
+- ate 120% da faixa esperada: moderada / medio
+- ate 150% da faixa esperada: alta / alto
+- acima de 150% da faixa esperada: critica / critico
+
+Tambem sao calculados resumos de apoio:
+
+- maior pico de requisicoes por minuto
+- evento com maior pressao media
+- horario critico mais recorrente
+
+Variaveis esperadas para essa etapa:
+
+- DB_HOST
+- DB_DATABASE
+- DB_USER
+- DB_PASSWORD
+- DB_PORT
+- ATMOS_FAIXA_ESPERADA
+
+Ponto de atencao:
+
+Se o MySQL, a biblioteca mysql-connector-python ou alguma variavel obrigatoria
+nao estiver disponivel, essa etapa registra aviso e a ETL principal continua
+rodando normalmente.
+
+
+8. PRINCIPAIS CUIDADOS
+
+- A ETL_atmos.py deve ser executada normalmente com python ETL_atmos.py.
+
+- A Lambda nao deve ficar em loop infinito. O loop/captura continua separado
+  no coletor local, que roda no servidor monitorado.
+
+- A analise preditiva so funciona se o raw preditivo ja tiver sido enviado ao
+  S3 pelo coletor local.
+
+- O caminho raw/{empresa}/raw.csv e usado pelo raw preditivo. Como a ETL
+  principal tambem lista arquivos dentro de raw/{empresa}/, a validacao de
+  schema evita que esse CSV preditivo quebre o processamento principal.
+
+- O arquivo ETL-AND.py estava vazio, entao nao havia funcionalidade para
+  incorporar a partir dele.
+
+- Nao foi feita execucao completa contra o S3 real durante os ajustes, para
+  evitar gravacao ou sobrescrita de dados sem confirmacao.
+
+- Nao foi feita execucao contra o MySQL real durante os ajustes, para evitar
+  atualizar a tabela analise_carga_climatica sem confirmacao.
+
+9. RESUMO FINAL
+
+A ETL_atmos.py agora concentra o processamento principal da ETL e tambem a
+parte de processamento da analise preditiva que deve rodar na Lambda.
+
+Ela nao coleta mais metricas locais e nao possui loop infinito.
+
+A coleta local ficou separada no RAWanalisePreditiva.py, enquanto a
+ETL_atmos.py apenas processa os dados ja enviados para o S3.
+
+A ETL_atmos.py tambem passou a incluir a etapa MySQL de analise de carga
+climatica, protegida para nao interromper o fluxo principal caso o banco nao
+esteja configurado.
